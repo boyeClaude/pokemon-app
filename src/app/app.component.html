@@ -1,0 +1,20 @@
+<div style="text-align: center" class="content">
+  <h1>List de pokemons</h1>
+  <input type="number" (keyup.enter)="selectPokemon(input.value)" #input placeholder="enter" aria-label="index" />
+  <p *ngIf="pokemonSelected">Vous avez selectionné le pokemon : {{ pokemonSelected?.name }}</p>
+  <p *ngIf="!pokemonSelected">
+    <span> Le pokemon n'existe pas </span>
+  </p>
+  <div *ngFor="let pokemon of pokemonList" style="margin-top: 2rem; border: 1px solid tomato">
+    <div class="row">
+      <div class="col s4">
+        <img [src]="pokemon.picture" alt="pokemon's name" />
+      </div>
+      <div class="col s2">
+        <h4>{{ pokemon?.name }}</h4>
+        <p>{{ pokemon?.created }}</p>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
