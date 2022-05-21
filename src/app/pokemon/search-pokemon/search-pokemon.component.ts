@@ -16,9 +16,13 @@ export class SearchPokemonComponent implements OnInit {
 
   ngOnInit(): void {
     this.pokemons$ = this.searchTerms.pipe(
+      // {.... "ab"...."abz"..."abc"}
       debounceTime(300),
+      // {...."ab"..."ab"...."abc"}
       distinctUntilChanged(),
+      // {...."ab".... "abc"....}
       switchMap((term) => this.pokemonService.searchPokemonList(term))
+      // {.... pokemonList(ab)....... pokemonList(abc)}
     );
   }
 
