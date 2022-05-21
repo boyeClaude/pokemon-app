@@ -42,6 +42,13 @@ export class PokemonService {
     );
   }
 
+  addPokemon(pokemon: Pokemon): Observable<Pokemon> {
+    return this.http.post<Pokemon>(`${API_URL}`, pokemon, HTTP_OPTIONS).pipe(
+      tap((response) => this.log(response)),
+      catchError((error) => this.handleError(error, null))
+    );
+  }
+
   deletePokemonById(pokemonId: number): Observable<null> {
     return this.http.delete<null>(`${API_URL}/${pokemonId}`, HTTP_OPTIONS).pipe(
       tap((response) => this.log(response)),
