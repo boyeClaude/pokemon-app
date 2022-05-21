@@ -5,7 +5,7 @@ import { Component, OnInit } from "@angular/core";
   selector: "app-add-pokemon",
   template: `
     <h2 class="center">Add a pokemon</h2>
-    <app-pokemon-form [pokemon]="pokemon" ]></app-pokemon-form>
+    <app-pokemon-form [pokemon]="pokemon"></app-pokemon-form>
   `,
   styles: [],
 })
