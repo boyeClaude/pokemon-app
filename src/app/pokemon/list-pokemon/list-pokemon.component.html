@@ -1,5 +1,7 @@
 <div class="container">
   <div class="row">
+    <app-search-pokemon></app-search-pokemon>
+
     <div *ngIf="pokemonList$ | async as pokemons">
       <div *ngFor="let pokemon of pokemons" class="col m4 s6">
         <div (click)="goToPokemon(pokemon)" class="card horizontal" appBorderCard>
