@@ -1,9 +1,14 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, of, tap } from "rxjs";
 import { POKEMONS } from "./mock-pokemon";
 import { Pokemon } from "./pokemon";
 
+const HTTP_OPTIONS = {
+  headers: new HttpHeaders({ "Content-Type": "application/json" }),
+};
+
+const API_URL = "api/pokemons";
 @Injectable({
   providedIn: "root",
 })
@@ -11,7 +16,7 @@ export class PokemonService {
   constructor(private http: HttpClient) {}
 
   getPokemonList(): Observable<Pokemon[]> {
-    return this.http.get<Pokemon[]>("api/pokemons").pipe(
+    return this.http.get<Pokemon[]>(`${API_URL}`).pipe(
       tap((pokemonList) => this.log(pokemonList)),
       catchError((error) => {
         return this.handleError(error, []);
@@ -20,7 +25,7 @@ export class PokemonService {
   }
 
   getPokemonById(pokemonId: number): Observable<Pokemon | undefined> {
-    return this.http.get<Pokemon | undefined>(`api/pokemons/${pokemonId}`).pipe(
+    return this.http.get<Pokemon | undefined>(`${API_URL}/${pokemonId}`).pipe(
       tap((pokemon) => this.log(pokemon)),
       catchError((error) => {
         return this.handleError(error, undefined);
@@ -28,7 +33,23 @@ export class PokemonService {
     );
   }
 
-  private log(response: Pokemon[] | Pokemon | undefined) {
+  updatePokemon(pokemon: Pokemon): Observable<null> {
+    return this.http.put<Pokemon>(`${API_URL}`, pokemon, HTTP_OPTIONS).pipe(
+      tap((response) => this.log(response)),
+      catchError((error) => {
+        return this.handleError(error, undefined);
+      })
+    );
+  }
+
+  deletePokemonById(pokemonId: number): Observable<null> {
+    return this.http.delete<null>(`${API_URL}/${pokemonId}`, HTTP_OPTIONS).pipe(
+      tap((response) => this.log(response)),
+      catchError((error) => this.handleError(error, null))
+    );
+  }
+
+  private log(response: Pokemon[] | Pokemon | undefined | null) {
     console.table(response);
   }
 

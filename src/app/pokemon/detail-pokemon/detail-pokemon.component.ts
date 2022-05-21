@@ -22,7 +22,11 @@ export class DetailPokemonComponent implements OnInit {
     }
   }
 
-  goBack() {
+  deletePokemon(pokemon: Pokemon) {
+    this.pokemonService.deletePokemonById(pokemon.id).subscribe(() => this.goToPokemonList());
+  }
+
+  goToPokemonList() {
     this.router.navigate(["/pokemons"]);
   }
 
