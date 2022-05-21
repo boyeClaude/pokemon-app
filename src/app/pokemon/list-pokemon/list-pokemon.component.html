@@ -1,19 +1,21 @@
 <div class="container">
   <div class="row">
-    <div *ngFor="let pokemon of pokemonList" class="col m4 s6">
-      <div (click)="goToPokemon(pokemon)" class="card horizontal" appBorderCard>
-        <div class="card-image">
-          <img [src]="pokemon.picture" alt="pokemon's name" />
-        </div>
+    <div *ngIf="pokemonList$ | async as pokemons">
+      <div *ngFor="let pokemon of pokemons" class="col m4 s6">
+        <div (click)="goToPokemon(pokemon)" class="card horizontal" appBorderCard>
+          <div class="card-image">
+            <img [src]="pokemon.picture" alt="pokemon's name" />
+          </div>
 
-        <div class="card-stacked">
-          <div class="card-content">
-            <p style="font-weight: 700; text-transform: uppercase; font-size: 1.5rem">{{ pokemon?.name }}</p>
-            <p>
-              <small>{{ pokemon?.created | date }}</small>
-            </p>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p style="font-weight: 700; text-transform: uppercase; font-size: 1.5rem">{{ pokemon?.name }}</p>
+              <p>
+                <small>{{ pokemon?.created | date }}</small>
+              </p>
 
-            <span *ngFor="let type of pokemon.types" class="{{ type | pokemonTypeColor }}"> {{ type }}</span>
+              <span *ngFor="let type of pokemon.types" class="{{ type | pokemonTypeColor }}"> {{ type }}</span>
+            </div>
           </div>
         </div>
       </div>
